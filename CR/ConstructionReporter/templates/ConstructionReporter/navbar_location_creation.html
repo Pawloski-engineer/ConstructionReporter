@@ -9,43 +9,7 @@
       </button>
 
       <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav ml-auto">
-                  <li class="nav-item">
-                      <a class="nav-link" href="/buildings">{% trans "Building selection" %} </a>
-                  </li>
-            {% if user.is_authenticated %}
-          <li class="nav-item">
-            <a class="nav-link" href="/logout"> {% trans 'Logout' %} {{ user.get_username }}
-                <span class="sr-only">(current)</span>
-            </a>
-          </li>
-            {% endif %}
 
-          <li class="nav-item">
-
-          <!-- menu? -->
-
-              <form action="{% url 'set_language' %}" method="post">
-                            {% csrf_token %}
-                            <input name="next" type="hidden" value="{{ redirect_to }}"/>
-                            <select name="language" onchange="this.form.submit()">
-                                {% get_current_language as LANGUAGE_CODE %}
-                                {% get_available_languages as LANGUAGES %}
-                                {% for lang in LANGUAGES %}
-            {% if LANGUAGE_CODE == lang.0 %}
-                                <option value="{{ lang.0 }}" selected="selected">
-            {% else %}
-                                <option value="{{ lang.0 }}">
-            {% endif %}
-                                    {{ lang.1 }} ({{ lang.0 }})
-                                </option>
-                                {% endfor %}
-                            </select>
-
-                        </form>
-                        <!-- menu abowe -->
-          </li>
-        </ul>
       </div>
     </div>
   </nav>

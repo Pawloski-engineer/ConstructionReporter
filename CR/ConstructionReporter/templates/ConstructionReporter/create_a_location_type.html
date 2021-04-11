@@ -19,7 +19,7 @@
 </div>
 <br>
 
-    <form action="/cr/location_type_creation/new" method="post">
+    <form action="/location_type_creation/new" method="post">
     {% csrf_token %}
     {{ form.non_field_errors }}
     {{ form.as_p }}
@@ -43,5 +43,12 @@
     </div>
 </div>
     </form>
+<div>
+    Existing location types:
+{% for loc_type in location_types %}
+    {{ loc_type.location_type_name }}
+
+    {% endfor %}
+</div>
 
 {% endblock %}
