@@ -1,11 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-class DefectStatus(models.Model):
-    status = models.CharField(max_length=200)
-
-    def __str__(self):
-        return self.status
+# class DefectStatus(models.Model):
+#     status = models.CharField(max_length=200)
+#
+#     def __str__(self):
+#         return self.status
 
 class LocationType(models.Model):
     location_type_name = models.CharField(max_length=200)
@@ -48,15 +48,15 @@ class MediaFile(models.Model):
     def __str__(self):
         return self.media_file
 
-class Defect(models.Model):
-    defect_name = models.CharField(max_length=200)
-    defect_description = models.CharField(max_length=200)
-    defect_status = models.ForeignKey(DefectStatus, on_delete=models.CASCADE)
-    defect_location = models.ForeignKey(Location, on_delete=models.CASCADE)
-    defect_respondent = models.ForeignKey(Respondent, on_delete=models.PROTECT)
-    creation_date = models.DateTimeField('date created')
-    media_files = models.ManyToManyField(MediaFile)
-    reporter = models.ForeignKey(User, on_delete=models.PROTECT)
+# class Defect(models.Model):
+#     defect_name = models.CharField(max_length=200)
+#     defect_description = models.CharField(max_length=200)
+#     defect_status = models.CharField(max_length=200),    #TODO make it so that user decides which one to choose
+#     defect_location = models.ForeignKey(Location, on_delete=models.CASCADE)
+#     defect_respondent = models.ForeignKey(Respondent, on_delete=models.PROTECT)
+#     creation_date = models.DateTimeField('date created')
+#     media_files = models.ManyToManyField(MediaFile)
+#     reporter = models.ForeignKey(User, on_delete=models.PROTECT)
 
 
 

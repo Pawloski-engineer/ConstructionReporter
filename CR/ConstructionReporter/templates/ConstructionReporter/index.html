@@ -16,13 +16,27 @@
      <div class="row">
        <div class="col-md-12 text-center">
  <h1 class="mt-5"> {% trans "Welcome to construction flaws app!" %}</h1>
+       </div>
+                {% if user.is_authenticated %}
+                works
 
+                {% else %}
+        <div>
     <h3><a href="/login"> {% trans "Login_index" %} </a> {% trans "or click" %} <a href="/signup">{% trans "here" %}</a> {% trans "to sign in"%}.</h3>
 
         </div>
-
+            {% endif %}
       </div>
+
 </div>
 
 
 {% endblock %}
+
+        {% if user.is_authenticated %}
+      <li class="nav-item">
+        <a class="nav-link" href="/logout"> {% trans 'Logout' %} {{ user.get_username }}
+            <span class="sr-only">(current)</span>
+        </a>
+      </li>
+        {% endif %}

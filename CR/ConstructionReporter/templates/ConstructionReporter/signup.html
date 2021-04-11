@@ -1,0 +1,39 @@
+{% extends 'ConstructionReporter/base.html' %}
+{% load i18n %}
+{% block head %}
+<title>{% trans "New user" %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+{% endblock %}
+
+{% block content %}
+{% include 'ConstructionReporter/navbar_index.html' %}
+<div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="mt-5">{% trans "Create an account" %}: </h2>
+                 <form method="post">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <p class="lead">{{ field.label_tag }}
+                                    <ul class="list-unstyled">
+                                        <li>
+                                        {{ field }}
+                                        </li>
+                <!--                        <br>{% if field.help_text %}-->
+                <!--                          <small style="color: grey">{{ field.help_text }}</small>-->
+                <!--                        {% endif %}-->
+                                        {% for error in field.errors %}
+                          <p style="color: red">{{ error }}</p>
+                        {% endfor %}
+                      </p>
+                    {% endfor %}
+                    <button type="submit">{% trans "Sign in" %}</button>
+                  </form>
+
+                <br><br>{% trans "If you already have an account, login by clicking" %} <a href="/login">{% trans "here" %}</a>
+
+            </div>
+        </div>
+</div>
+{% endblock %}

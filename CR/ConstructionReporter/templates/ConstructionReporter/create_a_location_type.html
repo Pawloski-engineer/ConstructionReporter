@@ -1,0 +1,47 @@
+{% extends 'ConstructionReporter/base.html' %}
+{% block head %}
+{% load i18n %}
+<title>{% trans "New location type" %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+{% endblock %}
+
+
+{% block content %}
+{% include 'ConstructionReporter/navbar_location_creation.html' %}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12 text-center">
+                <h2>{% trans "New location type" %}</h2>
+        </div>
+    </div>
+</div>
+<br>
+
+    <form action="/cr/location_type_creation/new" method="post">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    {{ form.as_p }}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-md-5 col-lg-4 col-xl-3 offset-md-1 text-center text-md-left">
+            <h5><label for="location_type_name">{% trans "Give location type name" %}:</label></h5>
+        </div>
+        <div class="col-12 col-md-6 col-lg-7 col-xl-8 text-center text-md-left">
+            <input id="location_type_name" type="text" name="location_type_name">
+        </div>
+
+    </div>
+</div>
+        <br>
+        <div class="col-12 text-center">
+            <input type="submit" class="btn btn-primary" value={% trans "submit" %}></h3>
+        </div>
+    </div>
+</div>
+    </form>
+
+{% endblock %}

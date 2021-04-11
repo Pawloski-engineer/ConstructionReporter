@@ -1,0 +1,60 @@
+{% extends 'ConstructionReporter/base.html' %}
+{% load i18n %}
+{% block head %}
+<title>{% trans "Login" %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+{% endblock %}
+
+{% block content %}
+{% include 'ConstructionReporter/navbar_index.html' %}
+
+<div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="mt-5">{% trans "Login to your account" %}: </h2>
+
+
+{% if form.errors %}
+<p>{% trans "Your username and password didn't match. Please try again." %}</p>
+{% endif %}
+
+{% if next %}
+    {% if user.is_authenticated %}
+    <p>{% trans "Your account doesn't have access to this page. To proceed,
+    please login with an account that has an access." %}</p>
+    {% else %}
+    <p>{% trans "Please login to see this page." %"</p>
+    {% endif %}
+{% endif %}
+
+<form method="post">
+    {% csrf_token %}
+    {% for field in form %}
+          <p>
+        <p class="lead">{{ field.label_tag }}<br>
+            <ul class="list-unstyled">
+                <li>
+            {{ field }}
+            {% if field.help_text %}
+          <small style="color: grey">{{ field.help_text }}</small>
+        {% endif %}
+                </li>
+        {% for error in field.errors %}
+          <p style="color: red">{{ error }}</p>
+        {% endfor %}
+
+      </p>
+    {% endfor %}
+    <button type="submit">{% trans "Login" %}</button>
+  </form>
+
+<br><br>{% trans "Not a user yet?" %}  <a href="/signup">{% trans "Create an account" %}</a>
+
+
+
+            </div>
+        </div>
+</div>
+
+{% endblock %}
