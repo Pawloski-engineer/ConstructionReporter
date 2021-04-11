@@ -1,0 +1,54 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"> <!-- check if it does not make mess with PWA -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+        <!-- Bootstrap core CSS -->
+        <link rel="stylesheet" type="text\css" href="{% static 'css\style.css' %}">
+        <link rel="manifest" href="{% static 'manifest.json' %}">
+        <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}"  />  <!-- remove "/" at the end -->
+        <link rel="apple-touch-icon" href="{% static 'images/hello-icon-152.png' %}">
+        <link rel="prev" href="{% static 'main.html' %}">
+        <meta name="theme-color" content="white"/>
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="apple-mobile-web-app-title" content="Construction Flaws">
+        <meta name="msapplication-TileImage" content="images/hello-icon-144.png">
+        <meta name="msapplication-TileColor" content="#FFFFFF">
+
+        {% block head %}
+        {% endblock %}
+        <style>
+            .no_bulets {
+            list-style:none;
+            }
+        </style>
+    </head>
+
+<body class="fullscreen" style="background-color:lightgrey;">
+    <div class="content container">
+        <div class="row">
+            <div class="col-md-12">
+            {% block content %}
+            {% endblock %}
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    {% block sw_script %}
+
+        {% endblock %}
+
+        {% block extended_script %}
+        {% endblock %}
+<!--    <script src="/static/js/sw.js"></script>-->
+</body>
+
+
+
+</html>

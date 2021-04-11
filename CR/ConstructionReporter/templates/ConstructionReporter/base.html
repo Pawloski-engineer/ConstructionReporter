@@ -1,0 +1,46 @@
+{% extends 'ConstructionReporter/layout.html' %}
+{% load i18n %}
+
+{% block extended_script %}
+
+
+
+
+<script>
+
+   console.log("Awesome script");
+
+   let new_defect_list = JSON.parse(localStorage.getItem('list'));
+   if (new_defect_list && new_defect_list.length > 0) {
+        console.log("success");
+
+        Object.keys(new_defect_list).forEach(function (key){
+            console.log(new_defect_list[key].name);
+            console.log(new_defect_list[key].description);
+            console.log(new_defect_list[key].hostingFlat);
+            console.log(new_defect_list[key].respondent);
+
+        });
+
+
+<!--        new_defect_list.forEach(element => {console.log(element.description)-->
+<!--                                            console.log(element.name)-->
+<!--                                            });-->
+
+   };
+
+</script>
+
+<!--<form action="/buildings/{{building.id}}/staircase/{{staircase.id}}/flat/{{flat.id}}/defect_creation/new" method="post">-->
+<!--    {% csrf_token %}-->
+<!--    {{ form.non_field_errors }}-->
+<!--    {{ form.as_p }}-->
+
+
+<!--    <input id="hosting_flat" hidden value="{{flat.id}}" type="text" name="hosting_flat">-->
+<!--    <input id="hosting_flat" hidden value="{{flat.id}}" type="text" name="hosting_flat">-->
+<!--    <input id="hosting_flat" hidden value="{{flat.id}}" type="text" name="hosting_flat">-->
+
+
+{% endblock %}
+
