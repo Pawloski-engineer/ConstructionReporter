@@ -10,6 +10,11 @@ from django.contrib.auth.models import User
 class LocationType(models.Model):
     location_type_name = models.CharField(max_length=200)
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['location_type_name'], name='location_unique_name'),
+        ]
+
     def __str__(self):
         return self.location_type_name
 
@@ -19,7 +24,7 @@ class UserGroup(models.Model):
     # user_group_admin = models.ManyToManyField(User)
 
     def __str__(self):
-        return self.location_name
+        return self.user_group_name
 
 
 class Location(models.Model):

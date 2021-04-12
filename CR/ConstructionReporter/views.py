@@ -32,7 +32,8 @@ def create_a_location_type_new(request):
             messages.info(request, "Location type successfully created")
             return redirect('/', {'form': form})
         else:
-            print('inform_user_no_building_name')
+            messages.info(request, "Such location type already exists")
+            return render(request, 'ConstructionReporter/index.html')
 
 def save_new_location_type(form):
     location_type = form.save(commit=False)
