@@ -13,9 +13,9 @@ def create_a_location_type(request):
     if not request.user.is_authenticated:
         return render(request, 'index.html')
     else:
-        location_types = LocationType.objects.all()     #TODO when no objects exist - error
-        print(type(location_types))
-        location_types = ["2", "3"]
+        # location_types = LocationType.objects.all()     #TODO when no objects exist - error
+        # print(type(location_types))
+        location_types = load_location_types()
         context = {
             'location_types': location_types,
 
@@ -35,6 +35,12 @@ def create_a_location_type_new(request):
             messages.info(request, "Such location type already exists")
             return render(request, 'ConstructionReporter/index.html')
 
+
 def save_new_location_type(form):
     location_type = form.save(commit=False)
     location_type.save()
+
+
+def load_location_types():
+    location_types = LocationType.objects.all()
+    return location_types
