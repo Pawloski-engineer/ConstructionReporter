@@ -13,8 +13,6 @@ def create_a_location_type(request):
     if not request.user.is_authenticated:
         return render(request, 'index.html')
     else:
-        # location_types = LocationType.objects.all()     #TODO when no objects exist - error
-        # print(type(location_types))
         location_types = load_location_types()
         context = {
             'location_types': location_types,
