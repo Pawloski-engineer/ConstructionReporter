@@ -29,7 +29,7 @@ class UserGroup(models.Model):
 
 class Location(models.Model):
     location_name = models.CharField(max_length=200)
-    location_type = models.CharField(max_length=200)
+    location_type = models.ForeignKey(LocationType, on_delete=models.PROTECT)
     location_parent = models.ForeignKey('self', on_delete=models.CASCADE)
     location_user_group = models.ManyToManyField(UserGroup)
     location_admin = models.ManyToManyField(User)

@@ -1,8 +1,8 @@
-{% extends 'buildings/base.html' %}
+{% extends 'ConstructionReporter/base.html' %}
 {% block head %}
 {% load i18n %}
 <title>{% trans "New location" %}</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 {% endblock %}
 
@@ -13,44 +13,73 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-12 text-center">
-                <h2>{% trans "New location" %}</h2>
+            <h2>{% trans "New location" %}</h2>
         </div>
     </div>
 </div>
 <br>
 
-    <form action="/ConstructionReporter/location_creation/new" method="post">
+<form action="/location_creation/new" method="post">
     {% csrf_token %}
     {{ form.non_field_errors }}
     {{ form.as_p }}
 
 
-<div class="container">
-    <div class="row">
-        <div class="col-12 col-md-5 col-lg-4 col-xl-3 offset-md-1 text-center text-md-left">
-            <h5><label for="location_name">{% trans "Give location name" %}:</label></h5>
-        </div>
-        <div class="col-12 col-md-6 col-lg-7 col-xl-8 text-center text-md-left">
-            <input id="location_name" type="text" name="location_name">
-        </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-5 col-lg-4 col-xl-3 offset-md-1 text-center text-md-left">
+                <h5><label for="location_name">{% trans "Give location name" %}:</label></h5>
+            </div>
+            <div class="col-12 col-md-6 col-lg-7 col-xl-8 text-center text-md-left">
+                <input id="location_name" type="text" name="location_name">
+            </div>
 
-    </div>
-</div>
-        <br>
-
-
-<div class="container">
-    <div class="row">
-
-        <div class="col-12 col-md-6 col-lg-7 col-xl-8 offset-4 offset-lg-4 text-left">
-
-            <input id="location_admin" hidden value="{{current_user.id}}" type="text" name="location_admin">
-        </div>
-        <div class="col-12 text-center">
-            <input type="submit" class="btn btn-primary" value={% trans "submit" %}></h3>
         </div>
     </div>
+    <br>
+##########################
+        <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-5 col-lg-4 col-xl-3 offset-md-1 text-center text-md-left">
+                <h5><label for="location_type">{% trans "Select location type" %}:</label></h5>
+            </div>
+            <div class="col-12 col-md-6 col-lg-7 col-xl-8 text-center text-md-left">
+                <select id="location_type" type="text" name="location_type">
+                    <option value="" disabled selected>select a location type</option>
+                    {% for loc_type in location_types %}
+                        <option value={{ loc_type }}> {{ loc_type }} </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+        </div>
+    </div>
+    <br>
+##########################
+
+
+
+    <div class="container">
+        <div class="row">
+
+            <div class="col-12 col-md-6 col-lg-7 col-xl-8 offset-4 offset-lg-4 text-left">
+
+                <input id="location_admin" hidden value="{{current_user.id}}" type="text" name="location_admin">
+            </div>
+            <div class="col-12 text-center">
+                <input type="submit" class="btn btn-primary" value={% trans "submit" %}></h3>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div>
+    Existing locations:
+    {% for loc in locations %}
+    {{ loc.location_name }}
+
+    {% endfor %}
 </div>
-    </form>
+
 
 {% endblock %}
