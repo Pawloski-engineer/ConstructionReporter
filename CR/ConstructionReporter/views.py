@@ -1,8 +1,8 @@
 from django.shortcuts import render
-# from .models import Defect, Respondent, MediaFile, Location, LocationType, UserGroup
+# from .models import Defect, Respondent, MediaFile, Location, LocationType
 from .forms import LocationTypeForm, LocationForm
 from .models import LocationType, Location
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.shortcuts import render, redirect
 from django.contrib import messages
 
@@ -53,10 +53,12 @@ def create_a_location(request):
     else:
         locations = load_locations()
         location_types = load_location_types()
+        groups = load_groups()
         print(locations)
         context = {
             'locations': locations,
-            'location_types': location_types
+            'location_types': location_types,
+            'groups': groups
         }
         return render(request, 'ConstructionReporter/create_a_location.html', context)
 
@@ -67,10 +69,15 @@ def create_a_location_new(request):
     else:
         form = LocationForm(request.POST)
         if form.is_valid():
-            save_new_object(form)
+            obj = form.save(commit=False)
+            obj.field1 = request.user
+            obj.save()
             messages.info(request, "Location successfully created")
             return redirect('/', {'form': form})
         else:
+            print("form:")
+            print(form)
+            print("form ends")
             messages.info(request, "Such location already exists")
             return render(request, 'ConstructionReporter/index.html')
 
@@ -78,3 +85,8 @@ def create_a_location_new(request):
 def load_locations():
     locations = Location.objects.all()
     return locations
+
+
+def load_groups():
+    groups = Group.objects.all()
+    return groups

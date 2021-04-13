@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 
 # class DefectStatus(models.Model):
 #     status = models.CharField(max_length=200)
@@ -18,20 +18,20 @@ class LocationType(models.Model):
     def __str__(self):
         return self.location_type_name
 
-class UserGroup(models.Model):
-    user_group_name = models.CharField(max_length=200)
-    participants = models.ManyToManyField(User)
-    # user_group_admin = models.ManyToManyField(User)
-
-    def __str__(self):
-        return self.user_group_name
+# class UserGroup(models.Model):
+#     user_group_name = models.CharField(max_length=200)
+#     participants = models.ManyToManyField(User)
+#     # user_group_admin = models.ManyToManyField(User)
+#
+#     def __str__(self):
+#         return self.user_group_name
 
 
 class Location(models.Model):
     location_name = models.CharField(max_length=200)
     location_type = models.ForeignKey(LocationType, on_delete=models.PROTECT)
-    location_parent = models.ForeignKey('self', on_delete=models.CASCADE)
-    location_user_group = models.ManyToManyField(UserGroup)
+    location_parent = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True)
+    location_user_group = models.ManyToManyField(Group)
     location_admin = models.ManyToManyField(User)
 
     def __str__(self):

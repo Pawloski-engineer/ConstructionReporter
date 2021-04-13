@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 class LocationForm(forms.ModelForm):
     class Meta:
         model = Location
-        fields = ('location_name', 'location_type', 'location_parent', 'location_user_group', 'location_admin')
+        fields = ('location_name', 'location_type', 'location_parent', 'location_user_group')
 
 
 class LocationTypeForm(forms.ModelForm):

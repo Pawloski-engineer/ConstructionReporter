@@ -48,7 +48,48 @@
                 <select id="location_type" type="text" name="location_type">
                     <option value="" disabled selected>select a location type</option>
                     {% for loc_type in location_types %}
-                        <option value={{ loc_type }}> {{ loc_type }} </option>
+                        <option value={{ loc_type.id }}> {{ loc_type }} </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+        </div>
+    </div>
+    <br>
+##########################
+
+##########################
+        <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-5 col-lg-4 col-xl-3 offset-md-1 text-center text-md-left">
+                <h5><label for="location_type">{% trans "Select parent location" %}:</label></h5>
+            </div>
+            <div class="col-12 col-md-6 col-lg-7 col-xl-8 text-center text-md-left">
+                <select id="location_parent" type="text" name="location_parent">
+                    <option value="" disabled selected>select a location parent</option>
+                    {% for loc in locations %}
+                        <option value={{ loc.id }}> {{ loc }} </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+        </div>
+    </div>
+    <br>
+##########################
+
+
+##########################
+        <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-5 col-lg-4 col-xl-3 offset-md-1 text-center text-md-left">
+                <h5><label for="location_type">{% trans "Select user group" %}:</label></h5>
+            </div>
+            <div class="col-12 col-md-6 col-lg-7 col-xl-8 text-center text-md-left">
+                <select id="location_user_group" type="text" name="location_user_group">
+                    <option value="" disabled selected>select a user group</option>
+                    {% for group in groups %}
+                        <option value={{ group.id }}> {{ group }} </option>
                     {% endfor %}
                 </select>
             </div>
@@ -63,10 +104,10 @@
     <div class="container">
         <div class="row">
 
-            <div class="col-12 col-md-6 col-lg-7 col-xl-8 offset-4 offset-lg-4 text-left">
+<!--            <div class="col-12 col-md-6 col-lg-7 col-xl-8 offset-4 offset-lg-4 text-left">-->
 
-                <input id="location_admin" hidden value="{{current_user.id}}" type="text" name="location_admin">
-            </div>
+<!--                <input id="location_admin" hidden value="{{current_user.id}}" type="text" name="location_admin">-->
+<!--            </div>-->
             <div class="col-12 text-center">
                 <input type="submit" class="btn btn-primary" value={% trans "submit" %}></h3>
             </div>
