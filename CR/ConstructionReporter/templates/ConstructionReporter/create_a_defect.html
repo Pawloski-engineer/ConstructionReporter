@@ -8,18 +8,18 @@
 
 
 {% block content %}
-{% include 'ConstructionReporter/navbar_location_creation.html' %}
+{% include 'ConstructionReporter/navbar_defect_creation.html' %}
 
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-12 text-center">
-            <h2>{% trans "New location" %}</h2>
+            <h2>{% trans "New defect" %}</h2>
         </div>
     </div>
 </div>
 <br>
 
-<form action="/location_creation/new" method="post">
+<form action="/defect_creation/new" method="post">
     {% csrf_token %}
     {{ form.non_field_errors }}
     {{ form.as_p }}
@@ -28,10 +28,10 @@
     <div class="container">
         <div class="row">
             <div class="col-12 col-md-5 col-lg-4 col-xl-3 offset-md-1 text-center text-md-left">
-                <h5><label for="location_name">{% trans "Give location name" %}:</label></h5>
+                <h5><label for="defect_name">{% trans "Give defect name" %}:</label></h5>
             </div>
             <div class="col-12 col-md-6 col-lg-7 col-xl-8 text-center text-md-left">
-                <input id="location_name" type="text" name="location_name">
+                <input id="defect_name" type="text" name="defect_name">
             </div>
 
 
@@ -39,16 +39,35 @@
     </div>
     <br>
 ##########################
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-5 col-lg-4 col-xl-3 offset-md-1 text-center text-md-left">
+                <h5><label for="defect_description">{% trans "Give a defect description" %}:</label></h5>
+            </div>
+            <div class="col-12 col-md-6 col-lg-7 col-xl-8 text-center text-md-left">
+                <input id="defect_description" type="text" name="defect_description">
+            </div>
+
+
+        </div>
+    </div>
+    <br>
+
+
+
+
+##########################
         <div class="container">
         <div class="row">
             <div class="col-12 col-md-5 col-lg-4 col-xl-3 offset-md-1 text-center text-md-left">
-                <h5><label for="location_type">{% trans "Select location type" %}:</label></h5>
+                <h5><label for="defect_location">{% trans "Select defect location" %}:</label></h5>
             </div>
             <div class="col-12 col-md-6 col-lg-7 col-xl-8 text-center text-md-left">
-                <select id="location_type" type="text" name="location_type">
-                    <option value="" disabled selected>select a location type</option>
-                    {% for loc_type in location_types %}
-                        <option value={{ loc_type.id }}> {{ loc_type }} </option>
+                <select id="defect_location" type="text" name="defect_location">
+                    <option value="" disabled selected>select a defect location</option>
+                    {% for location in locations %}
+                        <option value={{ location.id }}> {{ location }} </option>
                     {% endfor %}
                 </select>
             </div>
@@ -58,36 +77,16 @@
     <br>
 ##########################
 
-##########################
-        <div class="container">
-        <div class="row">
-            <div class="col-12 col-md-5 col-lg-4 col-xl-3 offset-md-1 text-center text-md-left">
-                <h5><label for="location_type">{% trans "Select parent location" %}:</label></h5>
-            </div>
-            <div class="col-12 col-md-6 col-lg-7 col-xl-8 text-center text-md-left">
-                <select id="location_parent" type="text" name="location_parent">
-                    <option value="" disabled selected>select a location parent</option>
-                    {% for loc in locations %}
-                        <option value={{ loc.id }}> {{ loc }} </option>
-                    {% endfor %}
-                </select>
-            </div>
-
-        </div>
-    </div>
-    <br>
-##########################
-
 
 ##########################
         <div class="container">
         <div class="row">
             <div class="col-12 col-md-5 col-lg-4 col-xl-3 offset-md-1 text-center text-md-left">
-                <h5><label for="location_user_group">{% trans "Select user group" %}:</label></h5>
+                <h5><label for="defect_respondent">{% trans "Select defect respondent" %}:</label></h5>
             </div>
             <div class="col-12 col-md-6 col-lg-7 col-xl-8 text-center text-md-left">
-                <select id="location_user_group" type="text" name="location_user_group">
-                    <option value="" disabled selected>select a user group</option>
+                <select id="defect_respondent" type="text" name="defect_respondent">
+                    <option value="" disabled selected>select a defect respondent</option>
                     {% for group in groups %}
                         <option value={{ group.id }}> {{ group }} </option>
                     {% endfor %}
@@ -103,6 +102,7 @@
 
     <div class="container">
         <div class="row">
+
             <div class="col-12 text-center">
                 <input type="submit" class="btn btn-primary" value={% trans "submit" %}></h3>
             </div>

@@ -1,0 +1,54 @@
+{% extends 'ConstructionReporter/base.html' %}
+{% block head %}
+{% load i18n %}
+<title>{% trans "New location type" %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+{% endblock %}
+
+
+{% block content %}
+{% include 'ConstructionReporter/navbar_location_creation.html' %}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12 text-center">
+                <h2>{% trans "New defect status" %}</h2>
+        </div>
+    </div>
+</div>
+<br>
+
+    <form action="/defect_status_creation/new" method="post">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    {{ form.as_p }}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-md-5 col-lg-4 col-xl-3 offset-md-1 text-center text-md-left">
+            <h5><label for="defect_status">{% trans "Give defect status" %}:</label></h5>
+        </div>
+        <div class="col-12 col-md-6 col-lg-7 col-xl-8 text-center text-md-left">
+            <input id="defect_status" type="text" name="defect_status">
+        </div>
+
+    </div>
+</div>
+        <br>
+        <div class="col-12 text-center">
+            <input type="submit" class="btn btn-primary" value={% trans "submit" %}></h3>
+        </div>
+    </div>
+</div>
+    </form>
+<div>
+    Existing defect statuses:
+{% for def_status in defect_statuses %}
+    {{ def_status.defect_status }}
+
+    {% endfor %}
+</div>
+
+{% endblock %}

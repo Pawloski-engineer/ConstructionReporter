@@ -37,13 +37,14 @@ class Location(models.Model):
     def __str__(self):
         return self.location_name
 
-class Respondent(models.Model):
-    respondent_name = models.CharField(max_length=200)
-    phone = models.CharField(max_length=200)
-    email = models.EmailField(max_length=200)
+# class Respondent(models.Model):
+#     respondent_name = models.CharField(max_length=200)
+#     phone = models.CharField(max_length=200)
+#     email = models.EmailField(max_length=200)
+#
+#     def __str__(self):
+#         return self.respondent_name
 
-    def __str__(self):
-        return self.respondent_name
 
 class MediaFile(models.Model):
     media_file = models.FileField(upload_to='media_files/')
@@ -53,15 +54,23 @@ class MediaFile(models.Model):
     def __str__(self):
         return self.media_file
 
-# class Defect(models.Model):
-#     defect_name = models.CharField(max_length=200)
-#     defect_description = models.CharField(max_length=200)
-#     defect_status = models.CharField(max_length=200),    #TODO make it so that user decides which one to choose
-#     defect_location = models.ForeignKey(Location, on_delete=models.CASCADE)
-#     defect_respondent = models.ForeignKey(Respondent, on_delete=models.PROTECT)
-#     creation_date = models.DateTimeField('date created')
-#     media_files = models.ManyToManyField(MediaFile)
-#     reporter = models.ForeignKey(User, on_delete=models.PROTECT)
+
+class DefectStatus(models.Model):
+    defect_status = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.defect_status
+
+
+class Defect(models.Model):
+    defect_name = models.CharField(max_length=200)
+    defect_description = models.CharField(max_length=200)
+    defect_status = models.CharField(max_length=200, blank=True, null=True),    #TODO make it so that user decides which one to choose
+    defect_location = models.ForeignKey(Location, on_delete=models.CASCADE)
+    defect_respondent = models.ManyToManyField(Group, blank=True, null=True)
+    creation_date = models.DateTimeField('date created')
+    media_files = models.ManyToManyField(MediaFile, blank=True, null=True)
+    # reporter = models.ForeignKey(User, on_delete=models.PROTECT)
 
 
 
