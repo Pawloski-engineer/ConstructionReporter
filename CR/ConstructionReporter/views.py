@@ -5,7 +5,7 @@ from .models import LocationType, Location, DefectStatus, Defect
 from django.contrib.auth.models import User, Group
 from django.shortcuts import render, redirect
 from django.contrib import messages
-
+from datetime import datetime
 
 def index(request):
     return render(request, 'ConstructionReporter/index.html')
@@ -115,11 +115,13 @@ def create_a_defect(request):
         locations = load_locations()
         defects = load_defects()
         groups = load_groups()
+        defect_statuses = load_defect_statuses()
         print(locations)
         context = {
             'locations': locations,
             'defects': defects,
-            'groups': groups
+            'groups': groups,
+            'defect_statuses': defect_statuses,
         }
         return render(request, 'ConstructionReporter/create_a_defect.html', context)
 
@@ -131,7 +133,8 @@ def create_a_defect_new(request):
         form = DefectForm(request.POST)
         if form.is_valid():
             obj = form.save(commit=False)
-            obj.field1 = request.user
+            obj.field1 = datetime.now()
+            # obj.field2 = request.user
             obj.save()
             messages.info(request, "Defect successfully created")
             return redirect('/', {'form': form})

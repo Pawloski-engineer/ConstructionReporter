@@ -55,7 +55,25 @@
     <br>
 
 
+##########################
+        <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-5 col-lg-4 col-xl-3 offset-md-1 text-center text-md-left">
+                <h5><label for="defect_status">{% trans "Select defect status" %}:</label></h5>
+            </div>
+            <div class="col-12 col-md-6 col-lg-7 col-xl-8 text-center text-md-left">
+                <select id="defect_status" type="text" name="defect_status">
+                    <option value="" disabled selected>select a defect status</option>
+                    {% for def_status in defect_statuses %}
+                        <option value={{ def_status }}> {{ def_status }} </option>
+                    {% endfor %}
+                </select>
+            </div>
 
+        </div>
+    </div>
+    <br>
+##########################
 
 ##########################
         <div class="container">

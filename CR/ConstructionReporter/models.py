@@ -65,10 +65,11 @@ class DefectStatus(models.Model):
 class Defect(models.Model):
     defect_name = models.CharField(max_length=200)
     defect_description = models.CharField(max_length=200)
-    defect_status = models.CharField(max_length=200, blank=True, null=True),    #TODO make it so that user decides which one to choose
+    defect_status = models.ForeignKey(DefectStatus, on_delete=models.PROTECT)    #TODO make it so that user decides which one to choose
     defect_location = models.ForeignKey(Location, on_delete=models.CASCADE)
     defect_respondent = models.ManyToManyField(Group, blank=True, null=True)
     creation_date = models.DateTimeField('date created')
+    # creation_date = models.DateTimeField('date created', blank=True, null=True)
     media_files = models.ManyToManyField(MediaFile, blank=True, null=True)
     # reporter = models.ForeignKey(User, on_delete=models.PROTECT)
 
