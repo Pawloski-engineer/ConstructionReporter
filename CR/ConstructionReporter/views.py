@@ -95,9 +95,10 @@ def create_a_location_new(request):
     else:
         form = LocationForm(request.POST)
         if form.is_valid():
-            obj = form.save(commit=False)
-            obj.field1 = request.user
-            obj.save()
+            # obj = form.save(commit=False)
+            # obj.field1 = request.user
+            # obj.save()
+            form.save()
             messages.info(request, "Location successfully created")
             return redirect('/', {'form': form})
         else:
@@ -132,10 +133,11 @@ def create_a_defect_new(request):
     else:
         form = DefectForm(request.POST)
         if form.is_valid():
-            obj = form.save(commit=False)
-            obj.field1 = datetime.now()
-            # obj.field2 = request.user
-            obj.save()
+            # obj = form.save(commit=False)
+            # obj.field1 = datetime.now()
+            # # obj.field2 = request.user
+            # obj.save()
+            form.save()
             messages.info(request, "Defect successfully created")
             return redirect('/', {'form': form})
         else:
