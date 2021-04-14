@@ -70,7 +70,7 @@ class Defect(models.Model):
     defect_respondent = models.ManyToManyField(Group, blank=True, null=True)
     creation_date = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     media_files = models.ManyToManyField(MediaFile, blank=True, null=True)
-    # reporter = models.ForeignKey(User, on_delete=models.PROTECT)
+    reporter = models.ForeignKey(User, on_delete=models.PROTECT, null=True, blank=True)
 
 
 

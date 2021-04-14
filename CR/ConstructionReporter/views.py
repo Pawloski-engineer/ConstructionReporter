@@ -80,11 +80,12 @@ def create_a_location(request):
         locations = load_locations()
         location_types = load_location_types()
         groups = load_groups()
-        print(locations)
+        current_user = request.user
         context = {
             'locations': locations,
             'location_types': location_types,
-            'groups': groups
+            'groups': groups,
+            'current_user': current_user
         }
         return render(request, 'ConstructionReporter/create_a_location.html', context)
 
@@ -95,17 +96,17 @@ def create_a_location_new(request):
     else:
         form = LocationForm(request.POST)
         if form.is_valid():
-            # obj = form.save(commit=False)
-            # obj.field1 = request.user
-            # obj.save()
-            form.save()
+            obj = form.save(commit=False)
+            obj.save()
+            obj.location_admin.add(request.user.id)
+            obj.save()
             messages.info(request, "Location successfully created")
             return redirect('/', {'form': form})
         else:
             print("form:")
             print(form)
             print("form ends")
-            messages.info(request, "Such location already exists")
+            messages.info(request, "An error occurred")
             return render(request, 'ConstructionReporter/index.html')
 
 
@@ -117,7 +118,6 @@ def create_a_defect(request):
         defects = load_defects()
         groups = load_groups()
         defect_statuses = load_defect_statuses()
-        print(locations)
         context = {
             'locations': locations,
             'defects': defects,
@@ -133,18 +133,19 @@ def create_a_defect_new(request):
     else:
         form = DefectForm(request.POST)
         if form.is_valid():
-            # obj = form.save(commit=False)
-            # obj.field1 = datetime.now()
-            # # obj.field2 = request.user
+            obj = form.save(commit=False)
             # obj.save()
-            form.save()
+            obj.reporter = request.user
+            obj.save()
+
+            # form.save()
             messages.info(request, "Defect successfully created")
             return redirect('/', {'form': form})
         else:
             print("form:")
             print(form)
             print("form ends")
-            messages.info(request, "Such location already exists")
+            messages.info(request, "An error occurred")
             return render(request, 'ConstructionReporter/index.html')
 
 

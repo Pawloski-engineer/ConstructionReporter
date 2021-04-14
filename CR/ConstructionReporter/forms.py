@@ -26,4 +26,4 @@ class DefectStatusForm(forms.ModelForm):
 class DefectForm(forms.ModelForm):
     class Meta:
         model = Defect
-        fields = ('defect_name', 'defect_description', 'defect_status', 'defect_location', 'defect_respondent', 'media_files')
+        fields = ('defect_name', 'defect_description', 'defect_status', 'defect_location', 'defect_respondent', 'reporter', 'media_files')

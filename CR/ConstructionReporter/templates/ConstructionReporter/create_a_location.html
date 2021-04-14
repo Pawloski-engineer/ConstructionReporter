@@ -68,8 +68,9 @@
                 <select id="location_parent" type="text" name="location_parent">
                     <option value="" disabled selected>select a location parent</option>
                     {% for loc in locations %}
-                        <option value={{ loc.id }}> {{ loc }} </option>
+                    <option value={{ loc.id }}> {{ loc }} </option>
                     {% endfor %}
+                    <option value=""> -- independent location -- </option>
                 </select>
             </div>
 
