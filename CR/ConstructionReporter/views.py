@@ -5,7 +5,11 @@ from .models import LocationType, Location, DefectStatus, Defect
 from django.contrib.auth.models import User, Group
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from datetime import datetime
+
+from rest_framework import viewsets
+from rest_framework import permissions
+from .models import DefectSerializer
+
 
 def index(request):
     return render(request, 'ConstructionReporter/index.html')
@@ -167,3 +171,15 @@ def load_defects():
 def load_defect_statuses():
     defect_statuses = DefectStatus.objects.all()
     return defect_statuses
+
+
+def view_defects(request):
+    defects = load_defects()
+    context = {'defects': defects}
+    return render(request, 'ConstructionReporter/view_defects.html', context)
+
+
+class DefectViewSet(viewsets.ModelViewSet):
+    queryset = Defect.objects.all().order_by('creation_date')
+    serializer_class = DefectSerializer
+    permission_classes = [permissions.IsAuthenticated]

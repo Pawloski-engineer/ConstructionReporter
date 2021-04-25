@@ -1,11 +1,21 @@
 from django.db import models
 from django.contrib.auth.models import User, Group
+from rest_framework import serializers
+
+
+# from django.core.files.storage import FileSystemStorage
+#
+# file_storage = FileSystemStorage(location='media/uploads')
 
 # class DefectStatus(models.Model):
 #     status = models.CharField(max_length=200)
 #
 #     def __str__(self):
 #         return self.status
+
+
+
+
 
 class LocationType(models.Model):
     location_type_name = models.CharField(max_length=200)
@@ -67,9 +77,10 @@ class Defect(models.Model):
     defect_description = models.CharField(max_length=200)
     defect_status = models.ForeignKey(DefectStatus, on_delete=models.CASCADE)    #TODO make it so that user decides which one to choose
     defect_location = models.ForeignKey(Location, on_delete=models.CASCADE)
-    defect_respondent = models.ManyToManyField(Group, blank=True, null=True)
+    # defect_respondent = models.ManyToManyField(Group, blank=True, null=True)
+    defect_respondent = models.ManyToManyField(Group)
     creation_date = models.DateTimeField(auto_now_add=True, blank=True, null=True)
-    media_files = models.ManyToManyField(MediaFile, blank=True, null=True)
+    media_files = models.ManyToManyField(MediaFile, blank=True)
     reporter = models.ForeignKey(User, on_delete=models.PROTECT, null=True, blank=True)
 
 
@@ -87,3 +98,8 @@ class Defect(models.Model):
     #         field=models.CharField(choices=[('Unrepaired', 'Unrepaired'), ('Repaired', 'Repaired')], default='Unrepaired', max_length=10),
     #     ),
     # ]
+
+class DefectSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Defect
+        fields = ['defect_respondent', 'defect_status', 'defect_location']
