@@ -14,9 +14,6 @@ from rest_framework import serializers
 #         return self.status
 
 
-
-
-
 class LocationType(models.Model):
     location_type_name = models.CharField(max_length=200)
 
@@ -83,8 +80,6 @@ class Defect(models.Model):
     media_files = models.ManyToManyField(MediaFile, blank=True)
     reporter = models.ForeignKey(User, on_delete=models.PROTECT, null=True, blank=True)
 
-
-
     # test if defect needs to possess a photo
     # test photo size
     # relations - adding staircase to non-existing building
@@ -99,7 +94,54 @@ class Defect(models.Model):
     #     ),
     # ]
 
+
+class LocationTypeSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = LocationType
+        fields = ['location_type_name']
+
+
+class UserSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = User
+        fields = ('username',)
+
+
+class GroupSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Group
+        fields = ('name',)
+
+
+
+
+class LocationSerializer(serializers.HyperlinkedModelSerializer):
+    location_type = LocationTypeSerializer(many=False, read_only=True)
+    location_parent = serializers.PrimaryKeyRelatedField(read_only=True)
+    location_admin = UserSerializer(many=True, read_only=True)
+    location_user_group = GroupSerializer(many=True, read_only=True)
+
+    # location_user_group = serializers.PrimaryKeyRelatedField(read_only=True)
+
+
+    class Meta:
+        model = Location
+        fields = ['location_type', 'location_parent', 'location_admin', 'location_user_group']
+        # lookup_field = 'group__name'
+
+
+class DefectStatusSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = DefectStatus
+        fields = ['defect_status']
+
+
 class DefectSerializer(serializers.HyperlinkedModelSerializer):
+    defect_status = DefectStatusSerializer(many=False, read_only=True)
+    defect_location = LocationSerializer(many=False, read_only=True)
+    defect_respondent = GroupSerializer(many=True, read_only=True)
+
     class Meta:
         model = Defect
         fields = ['defect_respondent', 'defect_status', 'defect_location']
+

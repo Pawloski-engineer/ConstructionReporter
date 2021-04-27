@@ -8,7 +8,7 @@ from django.contrib import messages
 
 from rest_framework import viewsets
 from rest_framework import permissions
-from .models import DefectSerializer
+from .models import DefectSerializer, DefectStatusSerializer, LocationTypeSerializer, LocationSerializer, UserSerializer, GroupSerializer
 
 
 def index(request):
@@ -182,4 +182,44 @@ def view_defects(request):
 class DefectViewSet(viewsets.ModelViewSet):
     queryset = Defect.objects.all().order_by('creation_date')
     serializer_class = DefectSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
+
+
+
+# class DefectStatusViewSet(viewsets.ModelViewSet):
+#     queryset = DefectStatus.objects.all().order_by('defect_status')
+#     serializer_class = DefectStatusSerializer
+#     permission_classes = [permissions.AllowAny]
+
+class DefectStatusViewSet(viewsets.ModelViewSet):
+    queryset = DefectStatus.objects.all().values()
+    serializer_class = DefectStatusSerializer
+    permission_classes = [permissions.AllowAny]
+
+
+
+class LocationTypeViewSet(viewsets.ModelViewSet):
+    queryset = LocationType.objects.all().order_by('location_type_name')
+    serializer_class = LocationTypeSerializer
+    permission_classes = [permissions.AllowAny]
+
+
+
+class LocationViewSet(viewsets.ModelViewSet):
+    queryset = Location.objects.all().order_by('location_type')
+    serializer_class = LocationSerializer
+    permission_classes = [permissions.AllowAny]
+
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+
+class GroupViewSet(viewsets.ModelViewSet):
+    queryset = Group.objects.all()
+    serializer_class = GroupSerializer
+
+
