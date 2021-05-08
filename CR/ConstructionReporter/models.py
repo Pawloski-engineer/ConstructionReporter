@@ -2,18 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
 
-
-# from django.core.files.storage import FileSystemStorage
-#
-# file_storage = FileSystemStorage(location='media/uploads')
-
-# class DefectStatus(models.Model):
-#     status = models.CharField(max_length=200)
-#
-#     def __str__(self):
-#         return self.status
-
-
 class LocationType(models.Model):
     location_type_name = models.CharField(max_length=200)
 
@@ -25,14 +13,6 @@ class LocationType(models.Model):
     def __str__(self):
         return self.location_type_name
 
-# class UserGroup(models.Model):
-#     user_group_name = models.CharField(max_length=200)
-#     participants = models.ManyToManyField(User)
-#     # user_group_admin = models.ManyToManyField(User)
-#
-#     def __str__(self):
-#         return self.user_group_name
-
 
 class Location(models.Model):
     location_name = models.CharField(max_length=200)
@@ -43,14 +23,6 @@ class Location(models.Model):
 
     def __str__(self):
         return self.location_name
-
-# class Respondent(models.Model):
-#     respondent_name = models.CharField(max_length=200)
-#     phone = models.CharField(max_length=200)
-#     email = models.EmailField(max_length=200)
-#
-#     def __str__(self):
-#         return self.respondent_name
 
 
 class MediaFile(models.Model):
@@ -84,15 +56,6 @@ class Defect(models.Model):
     # test photo size
     # relations - adding staircase to non-existing building
     # negative tests - to check if tests work
-
-    #
-    # operations = [
-    #     migrations.AddField(
-    #         model_name='defect',
-    #         name='defect_status',
-    #         field=models.CharField(choices=[('Unrepaired', 'Unrepaired'), ('Repaired', 'Repaired')], default='Unrepaired', max_length=10),
-    #     ),
-    # ]
 
 
 class LocationTypeSerializer(serializers.HyperlinkedModelSerializer):
@@ -143,5 +106,5 @@ class DefectSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Defect
-        fields = ['defect_respondent', 'defect_status', 'defect_location']
+        fields = ['defect_respondent', 'defect_status', 'defect_location', 'defect_name', 'defect_description', 'defect_respondent', ]
 
