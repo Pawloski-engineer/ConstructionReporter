@@ -1,0 +1,36 @@
+{% extends 'ConstructionReporter/base.html' %}
+{% block head %}
+{% load i18n %}
+<title>{% trans "New location" %}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+{% endblock %}
+
+
+{% block content %}
+{% include 'ConstructionReporter/navbar_defect_creation.html' %}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12 text-center">
+            <h2>{% trans "Existing defects:" %}</h2>
+        </div>
+    </div>
+</div>
+<br>
+
+
+<div class="container">
+    <div class="col-12 text-center">
+        {% for defect in defects %}
+        <div>
+            {{ defect.defect_name }}
+            {{ defect.defect_description }}
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+
+
+{% endblock %}

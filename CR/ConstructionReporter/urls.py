@@ -24,6 +24,7 @@ urlpatterns = [
     path('location_creation/new', views.create_a_location_new, name='create_a_location_new'),
     path('defect_creation', views.create_a_defect, name='create_a_defect'),
     path('defect_creation/new', views.create_a_defect_new, name='create_a_defect_new'),
+    path('defects', views.view_defects, name='view_defects'),
     path('index/', views.index, name='index'),
     path('api/', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
