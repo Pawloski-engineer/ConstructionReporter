@@ -47,7 +47,7 @@ class Defect(models.Model):
     defect_status = models.ForeignKey(DefectStatus, on_delete=models.CASCADE)    #TODO make it so that user decides which one to choose
     defect_location = models.ForeignKey(Location, on_delete=models.CASCADE)
     # defect_respondent = models.ManyToManyField(Group, blank=True, null=True)
-    defect_respondent = models.ManyToManyField(Group)
+    defect_respondent = models.ForeignKey(Group, on_delete=models.CASCADE)
     creation_date = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     media_files = models.ManyToManyField(MediaFile, blank=True)
     reporter = models.ForeignKey(User, on_delete=models.PROTECT, null=True, blank=True)
