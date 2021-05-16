@@ -6,30 +6,30 @@
 
 
 
-<script>
+<!--<script>-->
 
-   console.log("Awesome script");
+<!--   console.log("Awesome script");-->
 
-   let new_defect_list = JSON.parse(localStorage.getItem('list'));
-   if (new_defect_list && new_defect_list.length > 0) {
-        console.log("success");
+<!--   let new_defect_list = JSON.parse(localStorage.getItem('list'));-->
+<!--   if (new_defect_list && new_defect_list.length > 0) {-->
+<!--        console.log("success");-->
 
-        Object.keys(new_defect_list).forEach(function (key){
-            console.log(new_defect_list[key].name);
-            console.log(new_defect_list[key].description);
-            console.log(new_defect_list[key].hostingFlat);
-            console.log(new_defect_list[key].respondent);
+<!--        Object.keys(new_defect_list).forEach(function (key){-->
+<!--            console.log(new_defect_list[key].name);-->
+<!--            console.log(new_defect_list[key].description);-->
+<!--            console.log(new_defect_list[key].hostingFlat);-->
+<!--            console.log(new_defect_list[key].respondent);-->
 
-        });
+<!--        });-->
 
 
-<!--        new_defect_list.forEach(element => {console.log(element.description)-->
-<!--                                            console.log(element.name)-->
-<!--                                            });-->
+<!--&lt;!&ndash;        new_defect_list.forEach(element => {console.log(element.description)&ndash;&gt;-->
+<!--&lt;!&ndash;                                            console.log(element.name)&ndash;&gt;-->
+<!--&lt;!&ndash;                                            });&ndash;&gt;-->
 
-   };
+<!--   };-->
 
-</script>
+<!--</script>-->
 
 <!--<form action="/buildings/{{building.id}}/staircase/{{staircase.id}}/flat/{{flat.id}}/defect_creation/new" method="post">-->
 <!--    {% csrf_token %}-->
