@@ -11,6 +11,9 @@ from rest_framework import permissions
 from .models import DefectSerializer, DefectStatusSerializer, LocationTypeSerializer, LocationSerializer, UserSerializer, GroupSerializer
 
 from django.views.generic import TemplateView
+from django.templatetags.static import static
+# from django.urls import reverse
+
 
 version = '1.0.1'
 
@@ -237,6 +240,6 @@ class ServiceWorkerView(TemplateView):
             'icon_url': static('images/hello-icon-512.png'),
             'manifest_url': static('manifest.json'),
             'style_url': static('css/style.css'),
-            'home_url': reverse('constructionflaws:buildings_list'),
-            'offline_url': reverse('constructionflaws:offline'),
+            # 'home_url': reverse('ConstructionReporter:buildings_list'),
+            # 'offline_url': reverse('ConstructionReporter:offline'),
         }

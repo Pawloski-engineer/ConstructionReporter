@@ -43,7 +43,7 @@
         {% block sw_script %}
             <script>
                 if ('serviceWorker' in navigator) {
-                    navigator.serviceWorker.register('{% url "ConstructionReporter:sw.js" %}', { scope: '/' }).then(function(reg) {
+                    navigator.serviceWorker.register('{% url "ConstructionReporter:sw.js" %}', { scope: '' }).then(function(reg) {
                         // registration worked
                         console.log('Registration succeeded. Scope is ' + reg.scope);
                     }).catch(function(error) {
