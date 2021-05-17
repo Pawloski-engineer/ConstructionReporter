@@ -27,6 +27,7 @@ urlpatterns = [
     path('defects', views.view_defects, name='view_defects'),
     path('index/', views.index, name='index'),
     path('api/', include(router.urls)),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('sw.js', views.ServiceWorkerView.as_view(), name=views.ServiceWorkerView.name, ),
 
 ]
