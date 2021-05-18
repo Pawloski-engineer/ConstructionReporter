@@ -1,0 +1,116 @@
+{% extends 'buildings/layout.html' %}
+
+{% block head %}
+
+<title>Construction Reporter - Offline</title>
+
+{% endblock %}
+{% block content %}
+
+
+    <h1>You are now offline</h1>
+
+<p><a href="/">Check your connection and try to come back later to Construction Flaws main page.</a></p>
+<body>
+  <header>
+        <h1>Create a new defect entry:</h1>
+          <form>
+          <div>
+            <div>
+              <label for="defect_name">Enter defect name:</label>
+              <input id="defect_name" type="text" required>
+
+            </div>
+            <div>
+              <label for="defect_description">Enter defect description:</label>
+              <textarea id="defect_description" type="text" required rows="4" cols="50"></textarea>
+            </div>
+            <div>
+              <label for="defect_location">Choose hosting flat:</label>
+              <select id="defect_location" type="text" name="available_flats" required></select>
+              
+            </div>
+            <div>
+              <label for="enterrespondent">Enter defect respondent:</label>
+              <input id="enterrespondent" type="text" required>
+              <input id="submitname" type="submit" value="Save new defect">
+            </div>
+  <!--          <div>-->
+  <!--              <input type='file' id="photo" onchange="readURL(this);" />-->
+  <!--          </div>-->
+          </div>
+        </form>
+
+  </header>
+</body>
+
+
+<script>
+const selectInput = document.querySelector('#enterhostingFlat');
+
+  function availableFlats() {
+    let available_flats = [];
+    let available_flats_text = localStorage.getItem("my_flats");
+    let the_flats = [];
+        if (available_flats_text && available_flats_text.length > 0) {
+          available_flats_parsed = JSON.parse(available_flats_text);
+          for (i=0; i < available_flats_parsed.length; i++){
+            available_flats = available_flats_parsed[i];
+            displayed_text = "Building: " + available_flats.building_name + "Staircase: " + available_flats.staircase_name + "Flat: " + available_flats.flat_name;
+            // alert(displayed_text);
+            // the_flats = the_flats + displayed_text;available_flats.flat_name;
+          // document.getElementById('hosting_flat').value = the_flats
+          
+    let option = document.createElement('option');
+    option.value = available_flats.flat_id;
+    option.innerText = displayed_text;
+          selectInput.appendChild(option);
+          }
+        }
+  }
+</script>
+
+<script>
+const form = document.querySelector('form');
+const nameInput = document.querySelector('#entername');
+const descrInput = document.querySelector('#enterdescr');
+const respondentInput = document.querySelector('#enterrespondent');
+const hostingFlatInput = document.querySelector('#enterhostingFlat');
+
+
+const submitBtn = document.querySelector('#submitname','#submitdescr', '#submitrespondent', '#submithostingFlat');
+const h1 = document.querySelector('h1');
+
+<!--function readURL(e){-->
+
+<!--}-->
+
+form.addEventListener('submit', function(e) {
+    e.preventDefault();
+  });
+
+submitBtn.addEventListener('click', function() {
+    // store the entered name in web storage
+    let list = [];
+    let list_text = localStorage.getItem('list');
+    if(list_text && list_text.length > 0) {
+      list = JSON.parse(list_text);
+    }
+
+    list.push({
+      name: nameInput.value,
+      description: descrInput.value,
+      respondent: respondentInput.value,
+      hostingFlat: hostingFlatInput.value,
+<!--      photo: photoInput.-->
+    });
+    localStorage.setItem('list', JSON.stringify(list));
+    console.log(list);
+    window.alert(JSON.stringify(list));
+  });
+
+
+</script>
+
+
+{% endblock %}

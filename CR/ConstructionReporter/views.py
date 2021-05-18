@@ -12,7 +12,7 @@ from .models import DefectSerializer, DefectStatusSerializer, LocationTypeSerial
 
 from django.views.generic import TemplateView
 from django.templatetags.static import static
-# from django.urls import reverse
+from django.urls import reverse
 
 
 version = '1.0.1'
@@ -241,5 +241,9 @@ class ServiceWorkerView(TemplateView):
             'manifest_url': static('manifest.json'),
             'style_url': static('css/style.css'),
             # 'home_url': reverse('ConstructionReporter:buildings_list'),
-            # 'offline_url': reverse('ConstructionReporter:offline'),
+            'offline_url': reverse('ConstructionReporter:offline'),
         }
+
+
+def offline(request):
+    return render(request, 'ConstructionReporter/offline.html')
