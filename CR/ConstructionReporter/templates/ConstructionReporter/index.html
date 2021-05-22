@@ -56,27 +56,24 @@
     </div>
 
 </div>
-<!-- {% for loc in existing_locations_list %}
-    <script>
-        console.log('{{loc.location_name}}')
-    </script> -->
-    
 
-
-<!-- {% endfor %} -->
 
 <script>
-    let locations_list = localStorage.getItem('locations_list');
+    var locations_list = localStorage.getItem('locations_list');
     if(locations_list) {
-      console.log("it exists");
+      console.log("List of locations exists");
+      console.log(JSON.parse(localStorage.getItem('locations_list')).results);
     }
     else {
-    console.log("it does not exist");
-
+    console.log("List of locations does not exist");
+    var existing_locations = fetch('http://127.0.0.1:8000/api/location-detail/')
+    .then(res => res.json())
+    .then(data => existing_locations = data)
+    .then(() => localStorage.setItem('locations_list', JSON.stringify(existing_locations))).then(console.log('List of locations created'));
     };
     
 
-</script>
+    </script>
 
 
 {% endblock %}
