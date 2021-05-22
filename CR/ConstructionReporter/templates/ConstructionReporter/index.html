@@ -56,7 +56,27 @@
     </div>
 
 </div>
+<!-- {% for loc in existing_locations_list %}
+    <script>
+        console.log('{{loc.location_name}}')
+    </script> -->
+    
 
+
+<!-- {% endfor %} -->
+
+<script>
+    let locations_list = localStorage.getItem('locations_list');
+    if(locations_list) {
+      console.log("it exists");
+    }
+    else {
+    console.log("it does not exist");
+
+    };
+    
+
+</script>
 
 
 {% endblock %}

@@ -79,6 +79,7 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class LocationSerializer(serializers.HyperlinkedModelSerializer):
+    # location_name = LocationNameSerializer(many=False, read_only=True)
     location_type = LocationTypeSerializer(many=False, read_only=True)
     location_parent = serializers.PrimaryKeyRelatedField(read_only=True)
     location_admin = UserSerializer(many=True, read_only=True)
@@ -89,7 +90,7 @@ class LocationSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Location
-        fields = ['location_type', 'location_parent', 'location_admin', 'location_user_group']
+        fields = ['location_name', 'location_type', 'location_parent', 'location_admin', 'location_user_group']
         # lookup_field = 'group__name'
 
 
