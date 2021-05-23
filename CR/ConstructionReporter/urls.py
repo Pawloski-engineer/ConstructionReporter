@@ -28,5 +28,6 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('sw.js', views.ServiceWorkerView.as_view(), name=views.ServiceWorkerView.name, ),
     path('offline/', views.offline, name='offline'),
+    path('refresh_localstorage/', views.refresh_localstorage, name='refresh_localstorage'),
 
 ]

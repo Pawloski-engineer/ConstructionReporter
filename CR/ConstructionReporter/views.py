@@ -14,6 +14,7 @@ from django.views.generic import TemplateView
 from django.templatetags.static import static
 from django.urls import reverse
 
+from django.core import serializers
 
 version = '1.0.1'
 
@@ -111,7 +112,8 @@ def create_a_location_new(request):
             obj.location_admin.add(request.user.id)
             obj.save()
             messages.info(request, "Location successfully created")
-            return redirect('/', {'form': form})
+            # TODO add refreshing location list in localstorage
+            return redirect('/refresh_localstorage', {'form': form})
         else:
             print("form:")
             print(form)
@@ -247,3 +249,6 @@ class ServiceWorkerView(TemplateView):
 
 def offline(request):
     return render(request, 'ConstructionReporter/offline.html')
+
+def refresh_localstorage(request):
+    return render(request, 'ConstructionReporter/refresh_localstorage.html')
