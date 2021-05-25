@@ -28,29 +28,29 @@
         {% if user.is_authenticated %}
 
         <div class="container">
-        <a href="/location_type_creation">Create a location type</a>
+            <a href="/location_type_creation">Create a location type</a>
         </div>
         <div class="container">
-        <a href="/defect_status_creation">Create a defect status</a>
-        </div>
-        <br>
-        <div class="container">
-        <a href="/location_creation">Create a location</a>
+            <a href="/defect_status_creation">Create a defect status</a>
         </div>
         <br>
         <div class="container">
-        <a href="/defect_creation">Create a defect</a>
+            <a href="/location_creation">Create a location</a>
         </div>
         <br>
         <div class="container">
-        <a href="/defects">View all defect</a>
+            <a href="/defect_creation">Create a defect</a>
+        </div>
+        <br>
+        <div class="container">
+            <a href="/defects">View all defect</a>
         </div>
 
 
         {% else %}
         <div>
             <h3><a href="/login"> {% trans "Login_index" %} </a> {% trans "or click" %} <a href="/signup">{% trans
-                "here" %}</a> {% trans "to sign in"%}.</h3>
+                    "here" %}</a> {% trans "to sign in"%}.</h3>
 
         </div>
         {% endif %}
@@ -62,20 +62,53 @@
 
 <script>
     var locations_list = localStorage.getItem('locations_list');
-    if(locations_list) {
-      console.log("List of locations exists");
-      console.log(JSON.parse(localStorage.getItem('locations_list')).results);
-    }
-    else {
-    console.log("List of locations does not exist");
-    var existing_locations = fetch('http://127.0.0.1:8000/api/location-detail/')
-    .then(res => res.json())
-    .then(data => existing_locations = data)
-    .then(() => localStorage.setItem('locations_list', JSON.stringify(existing_locations))).then(console.log('List of locations created'));
-    };
-    
+    if (locations_list) {
+        console.log("List of locations exists");
+        console.log(JSON.parse(localStorage.getItem('locations_list')));
 
-    </script>
+    }
+
+    else {
+        console.log("List of locations does not exist");
+        var partial_location_list = [];
+        var api_address = 'http://127.0.0.1:8000/api/location-detail/';
+        function loc_checking() {
+
+            fetch(api_address)
+                .then(res => res.json())
+                .then(data => {
+                    for (item in data.results) {
+                        // console.log(data.results[item])
+                        partial_location_list.push(data.results[item])
+                    };
+                    if (data.next) {
+
+                        api_address = data.next;
+                        loc_checking();
+
+                    }
+                    else {
+                        localStorage.setItem('locations_list', JSON.stringify(partial_location_list));
+
+                        console.log('done');
+                    }
+
+                });
+
+        };
+        loc_checking();
+    };
+    // else {
+    // console.log("List of locations does not exist");
+    // var existing_locations = fetch('http://127.0.0.1:8000/api/location-detail/')
+    // .then(res => res.json())
+    // .then(data => existing_locations = data)
+    // .then(() => localStorage.setItem('locations_list', JSON.stringify(existing_locations))).then(console.log('List of locations created'));
+
+    // };
+
+
+</script>
 
 <!-- index template ends -->
 {% endblock %}
