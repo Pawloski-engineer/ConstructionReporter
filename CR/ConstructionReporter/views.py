@@ -217,7 +217,7 @@ class LocationViewSet(viewsets.ModelViewSet):
     queryset = Location.objects.all().order_by('location_type')
     serializer_class = LocationSerializer
     permission_classes = [permissions.AllowAny]
-
+    pagination_class = None
 
 
 class UserViewSet(viewsets.ModelViewSet):
