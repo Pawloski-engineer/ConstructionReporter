@@ -8,6 +8,7 @@ from django.contrib import messages
 
 from rest_framework import viewsets
 from rest_framework import permissions
+from rest_framework import filters
 from .models import DefectSerializer, DefectStatusSerializer, LocationTypeSerializer, LocationSerializer, UserSerializer, GroupSerializer
 
 from django.views.generic import TemplateView
@@ -214,6 +215,8 @@ class LocationTypeViewSet(viewsets.ModelViewSet):
 
 
 class LocationViewSet(viewsets.ModelViewSet):
+    search_fields = ['location_name']
+    filter_backends = (filters.SearchFilter,)
     queryset = Location.objects.all().order_by('location_type')
     serializer_class = LocationSerializer
     permission_classes = [permissions.AllowAny]
