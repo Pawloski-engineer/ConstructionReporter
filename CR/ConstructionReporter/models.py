@@ -46,8 +46,8 @@ class Defect(models.Model):
     defect_description = models.CharField(max_length=200)
     defect_status = models.ForeignKey(DefectStatus, on_delete=models.CASCADE)    #TODO make it so that user decides which one to choose
     defect_location = models.ForeignKey(Location, on_delete=models.CASCADE)
-    # defect_respondent = models.ManyToManyField(Group, blank=True, null=True)
-    defect_respondent = models.ForeignKey(Group, on_delete=models.CASCADE)
+    defect_respondent = models.ManyToManyField(Group)
+    # defect_respondent = models.ForeignKey(Group, on_delete=models.CASCADE)
     creation_date = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     media_files = models.ManyToManyField(MediaFile, blank=True)
     reporter = models.ForeignKey(User, on_delete=models.PROTECT, null=True, blank=True)
@@ -79,6 +79,7 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class LocationSerializer(serializers.HyperlinkedModelSerializer):
+    # location_name = LocationNameSerializer(many=False, read_only=True)
     location_type = LocationTypeSerializer(many=False, read_only=True)
     location_parent = serializers.PrimaryKeyRelatedField(read_only=True)
     location_admin = UserSerializer(many=True, read_only=True)
@@ -89,7 +90,7 @@ class LocationSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Location
-        fields = ['location_type', 'location_parent', 'location_admin', 'location_user_group']
+        fields = ['location_name', 'location_type', 'location_parent', 'location_admin', 'location_user_group']
         # lookup_field = 'group__name'
 
 

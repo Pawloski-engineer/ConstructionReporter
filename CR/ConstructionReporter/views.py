@@ -8,12 +8,14 @@ from django.contrib import messages
 
 from rest_framework import viewsets
 from rest_framework import permissions
+from rest_framework import filters
 from .models import DefectSerializer, DefectStatusSerializer, LocationTypeSerializer, LocationSerializer, UserSerializer, GroupSerializer
 
 from django.views.generic import TemplateView
 from django.templatetags.static import static
-# from django.urls import reverse
+from django.urls import reverse
 
+from django.core import serializers
 
 version = '1.0.1'
 
@@ -111,7 +113,8 @@ def create_a_location_new(request):
             obj.location_admin.add(request.user.id)
             obj.save()
             messages.info(request, "Location successfully created")
-            return redirect('/', {'form': form})
+            # TODO add refreshing location list in localstorage
+            return redirect('/refresh_localstorage', {'form': form})
         else:
             print("form:")
             print(form)
@@ -212,10 +215,12 @@ class LocationTypeViewSet(viewsets.ModelViewSet):
 
 
 class LocationViewSet(viewsets.ModelViewSet):
+    search_fields = ['location_name']
+    filter_backends = (filters.SearchFilter,)
     queryset = Location.objects.all().order_by('location_type')
     serializer_class = LocationSerializer
     permission_classes = [permissions.AllowAny]
-
+    pagination_class = None
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -241,5 +246,12 @@ class ServiceWorkerView(TemplateView):
             'manifest_url': static('manifest.json'),
             'style_url': static('css/style.css'),
             # 'home_url': reverse('ConstructionReporter:buildings_list'),
-            # 'offline_url': reverse('ConstructionReporter:offline'),
+            'offline_url': reverse('ConstructionReporter:offline'),
         }
+
+
+def offline(request):
+    return render(request, 'ConstructionReporter/offline.html')
+
+def refresh_localstorage(request):
+    return render(request, 'ConstructionReporter/refresh_localstorage.html')

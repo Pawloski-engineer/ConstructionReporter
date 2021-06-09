@@ -5,8 +5,10 @@
 {% block head %}
 <title xmlns:container.width="http://www.w3.org/1999/xhtml">{% trans "Hello!" %}</title>
 {% endblock %}
-
+{% block extended_script %}
+{% endblock %}
 {% block content %}
+<!-- index template begins -->
 {% include 'ConstructionReporter/navbar_index.html' %}
 
 <div class="container">
@@ -58,8 +60,26 @@
 </div>
 
 
+<script>
+    var locations_list = localStorage.getItem('locations_list');
+    if(locations_list) {
+      console.log("List of locations exists");
+      console.log(JSON.parse(localStorage.getItem('locations_list')).results);
+    }
+    else {
+    console.log("List of locations does not exist");
+    var existing_locations = fetch('http://127.0.0.1:8000/api/location-detail/')
+    .then(res => res.json())
+    .then(data => existing_locations = data)
+    .then(() => localStorage.setItem('locations_list', JSON.stringify(existing_locations))).then(console.log('List of locations created'));
+    };
+    
 
+    </script>
+
+<!-- index template ends -->
 {% endblock %}
+
 
 {% if user.is_authenticated %}
 <li class="nav-item">

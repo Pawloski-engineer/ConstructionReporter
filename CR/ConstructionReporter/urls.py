@@ -11,8 +11,6 @@ router.register(r'location-detail', views.LocationViewSet)
 router.register(r'user-detail', views.UserViewSet)
 router.register(r'group-detail', views.GroupViewSet)
 
-
-
 app_name = 'ConstructionReporter'
 urlpatterns = [
     path('', views.index, name='index'),
@@ -29,5 +27,7 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('sw.js', views.ServiceWorkerView.as_view(), name=views.ServiceWorkerView.name, ),
+    path('offline/', views.offline, name='offline'),
+    path('refresh_localstorage/', views.refresh_localstorage, name='refresh_localstorage'),
 
 ]

@@ -1,0 +1,15 @@
+{% extends 'ConstructionReporter/index.html' %}
+{% load i18n %}
+
+{% block extended_script %}
+<!-- refresh_localstorage template begins-->
+<script>
+    var existing_locations = fetch('http://127.0.0.1:8000/api/location-detail/')
+        .then(res => res.json())
+        .then(data => existing_locations = data)
+        .then(() => localStorage.setItem('locations_list', JSON.stringify(existing_locations))).then(console.log('List of locations updated'));
+    
+</script>
+
+<!-- refresh_localstorage template ends-->
+{% endblock %}
