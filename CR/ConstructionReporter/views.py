@@ -116,10 +116,19 @@ def create_a_location_new(request):
             # TODO add refreshing location list in localstorage
             return redirect('/refresh_localstorage', {'form': form})
         else:
-            print("form:")
-            print(form)
-            print("form ends")
-            messages.info(request, "An error occurred")
+            # print("form:")
+            # print(form)
+            # print("form ends")
+            # messages.info(request, "An error occurred")
+            list_of_errors = form.errors
+            print('__________________')
+            print(type(list_of_errors))
+            print('__________________')
+            # messages.info(request, form.errors)
+            try:
+                messages.info(request, list_of_errors.pop('__all__'))
+            except KeyError:
+                messages.info(request, "Element does not exist")
             return render(request, 'ConstructionReporter/index.html')
 
 
@@ -155,9 +164,9 @@ def create_a_defect_new(request):
             messages.info(request, "Defect successfully created")
             return redirect('/', {'form': form})
         else:
-            print("form:")
+            print("__________________form:__________________")
             print(form)
-            print("form ends")
+            print("__________________form ends__________________")
             messages.info(request, "An error occurred")
             return render(request, 'ConstructionReporter/index.html')
 
