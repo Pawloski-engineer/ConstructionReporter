@@ -6,11 +6,9 @@
 
 <script>
     function check_form() {
-    console.log('clicked submit')
     var submit_button = document.getElementById("submit_button");
     var new_form = document.getElementById("new_form");
     var form_fields_to_check = ['location_name', 'location_type', 'location_user_group']
-    console.log(new_form.elements)
 
     var elements_to_check_values = Array.from(new_form.elements).filter( (element) => {
         return form_fields_to_check.includes(element.name) 
