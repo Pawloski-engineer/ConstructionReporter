@@ -21,6 +21,9 @@ class Location(models.Model):
     location_user_group = models.ManyToManyField(Group)
     location_admin = models.ManyToManyField(User)
 
+    class Meta:
+        unique_together = ('location_name', 'location_parent',)
+
     def __str__(self):
         return self.location_name
 
