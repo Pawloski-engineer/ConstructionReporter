@@ -88,7 +88,7 @@
             <div class="col-12 col-md-6 col-lg-7 col-xl-8 text-center text-md-left">
                 <select id="defect_status" type="text" name="defect_status">
                     <!-- TODO if none selected, set unrepaired as default -->
-                    <option value="" disabled selected>select a defect status</option>
+                    <option value="1"> Unrepaired</option>
                     {% for defect_status in defect_statuses %}
                         <option value={{ defect_status.id }}> {{ defect_status }} </option>
                     {% endfor %}

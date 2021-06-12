@@ -164,9 +164,9 @@ def create_a_defect_new(request):
             messages.info(request, "Defect successfully created")
             return redirect('/', {'form': form})
         else:
-            print("form:")
+            print("__________________form:__________________")
             print(form)
-            print("form ends")
+            print("__________________form ends__________________")
             messages.info(request, "An error occurred")
             return render(request, 'ConstructionReporter/index.html')
 
