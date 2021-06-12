@@ -4,6 +4,30 @@
 <title>{% trans "New location" %}</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
+<script>
+    function check_form() {
+    console.log('clicked submit')
+    var submit_button = document.getElementById("submit_button");
+    var new_form = document.getElementById("new_form");
+    var form_fields_to_check = ['location_name', 'location_type', 'location_user_group']
+    console.log(new_form.elements)
+
+    var elements_to_check_values = Array.from(new_form.elements).filter( (element) => {
+        return form_fields_to_check.includes(element.name) 
+    }).map( (element) => element.value)
+
+    if (elements_to_check_values.every(element_value => element_value != '')) {
+        new_form.submit()
+    }
+    else {
+        alert("You have to fill all required fields")
+    }
+
+    }
+
+
+</script>
+
 {% endblock %}
 
 
@@ -19,7 +43,7 @@
 </div>
 <br>
 
-<form action="/location_creation/new" method="post">
+<form action="/location_creation/new" method="post" id="new_form">
     {% csrf_token %}
     {{ form.non_field_errors }}
     {{ form.as_p }}
@@ -98,11 +122,13 @@
     <div class="container">
         <div class="row">
             <div class="col-12 text-center">
-                <input type="submit" class="btn btn-primary" value={% trans "submit" %}></h3>
+                <button type="button" class="btn btn-primary" id="submit_button" onclick="check_form()" > {% trans "submit" %} </button>
             </div>
         </div>
     </div>
 </form>
+
+
 
 
 <div>

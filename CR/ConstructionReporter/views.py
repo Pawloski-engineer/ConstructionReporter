@@ -116,10 +116,19 @@ def create_a_location_new(request):
             # TODO add refreshing location list in localstorage
             return redirect('/refresh_localstorage', {'form': form})
         else:
-            print("form:")
-            print(form)
-            print("form ends")
-            messages.info(request, "An error occurred")
+            # print("form:")
+            # print(form)
+            # print("form ends")
+            # messages.info(request, "An error occurred")
+            list_of_errors = form.errors
+            print('__________________')
+            print(type(list_of_errors))
+            print('__________________')
+            # messages.info(request, form.errors)
+            try:
+                messages.info(request, list_of_errors.pop('__all__'))
+            except KeyError:
+                messages.info(request, "Element does not exist")
             return render(request, 'ConstructionReporter/index.html')
 
 
