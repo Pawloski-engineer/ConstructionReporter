@@ -205,12 +205,6 @@ class DefectViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.AllowAny]
 
 
-# class DefectStatusViewSet(viewsets.ModelViewSet):
-#     queryset = DefectStatus.objects.all().order_by('defect_status')
-#     serializer_class = DefectStatusSerializer
-#     permission_classes = [permissions.AllowAny]
-
-
 class DefectStatusViewSet(viewsets.ModelViewSet):
     queryset = DefectStatus.objects.all().values()
     serializer_class = DefectStatusSerializer
@@ -224,17 +218,13 @@ class LocationTypeViewSet(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         location_type_data = request.data
-
-        # new_location_type = LocationType.objects.create(location_type_name=location_type_data["location_type_name"])
-        #
-        # new_location_type.save()
-
         serializer = LocationTypeSerializer(data=location_type_data)
 
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class LocationViewSet(viewsets.ModelViewSet):
     search_fields = ['location_name']

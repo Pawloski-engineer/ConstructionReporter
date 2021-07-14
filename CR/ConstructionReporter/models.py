@@ -4,12 +4,7 @@ from rest_framework import serializers
 
 
 class LocationType(models.Model):
-    location_type_name = models.CharField(max_length=200)
-
-    class Meta:
-        constraints = [
-            models.UniqueConstraint(fields=['location_type_name'], name='location_unique_name'),
-        ]
+    location_type_name = models.CharField(max_length=200, unique=True)
 
     def __str__(self):
         return self.location_type_name
@@ -67,10 +62,6 @@ class LocationTypeSerializer(serializers.HyperlinkedModelSerializer):
         model = LocationType
         fields = ['location_type_name']
 
-    def create(self, validated_data):
-        # the_location_type = LocationType.objects.create()
-        location_type_name = LocationType.objects.create()
-
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
@@ -84,8 +75,6 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('name',)
 
 
-
-
 class LocationSerializer(serializers.HyperlinkedModelSerializer):
     # location_name = LocationNameSerializer(many=False, read_only=True)
     location_type = LocationTypeSerializer(many=False, read_only=True)
@@ -94,7 +83,6 @@ class LocationSerializer(serializers.HyperlinkedModelSerializer):
     location_user_group = GroupSerializer(many=True, read_only=True)
 
     # location_user_group = serializers.PrimaryKeyRelatedField(read_only=True)
-
 
     class Meta:
         model = Location
@@ -115,5 +103,6 @@ class DefectSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Defect
-        fields = ['defect_respondent', 'defect_status', 'defect_location', 'defect_name', 'defect_description', 'defect_respondent', ]
+        fields = ['defect_respondent', 'defect_status', 'defect_location', 'defect_name', 'defect_description',
+                  'defect_respondent', ]
 
