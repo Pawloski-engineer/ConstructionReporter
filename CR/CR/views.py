@@ -40,6 +40,7 @@ def login_user(request):
         form = LoginForm()
     return render(request, 'ConstructionReporter/login.html', {'form': form})
 
+
 def logout_view(request):
     logout(request)
     return render(request, 'ConstructionReporter/index.html', )

@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
 
+
 class LocationType(models.Model):
     location_type_name = models.CharField(max_length=200)
 
@@ -65,6 +66,10 @@ class LocationTypeSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = LocationType
         fields = ['location_type_name']
+
+    def create(self, validated_data):
+        # the_location_type = LocationType.objects.create()
+        location_type_name = LocationType.objects.create()
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
