@@ -204,6 +204,15 @@ class DefectViewSet(viewsets.ModelViewSet):
     serializer_class = DefectSerializer
     permission_classes = [permissions.AllowAny]
 
+    def create(self, request, *args, **kwargs):
+        defect_data = request.data
+        serializer = DefectSerializer(data=defect_data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class DefectStatusViewSet(viewsets.ModelViewSet):
     queryset = DefectStatus.objects.all().values()
