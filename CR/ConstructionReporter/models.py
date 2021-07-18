@@ -2,13 +2,9 @@ from django.db import models
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
 
-class LocationType(models.Model):
-    location_type_name = models.CharField(max_length=200)
 
-    class Meta:
-        constraints = [
-            models.UniqueConstraint(fields=['location_type_name'], name='location_unique_name'),
-        ]
+class LocationType(models.Model):
+    location_type_name = models.CharField(max_length=200, unique=True)
 
     def __str__(self):
         return self.location_type_name
@@ -64,43 +60,48 @@ class Defect(models.Model):
 class LocationTypeSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = LocationType
-        fields = ['location_type_name']
+        fields = ['id', 'location_type_name']
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
-        fields = ('username',)
+        fields = ('id', 'username',)
 
 
 class GroupSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Group
-        fields = ('name',)
-
-
+        fields = ('id', 'name',)
 
 
 class LocationSerializer(serializers.HyperlinkedModelSerializer):
     # location_name = LocationNameSerializer(many=False, read_only=True)
-    location_type = LocationTypeSerializer(many=False, read_only=True)
+    # location_type = LocationTypeSerializer(many=False, read_only=True)
+    location_type = serializers.PrimaryKeyRelatedField(queryset=LocationType.objects.all())
     location_parent = serializers.PrimaryKeyRelatedField(read_only=True)
     location_admin = UserSerializer(many=True, read_only=True)
     location_user_group = GroupSerializer(many=True, read_only=True)
 
-    # location_user_group = serializers.PrimaryKeyRelatedField(read_only=True)
 
+
+    # location_parent = serializers.PrimaryKeyRelatedField(read_only=True)
+    # location_type = serializers.PrimaryKeyRelatedField(queryset=LocationType.objects.all(), write_only=True)
+    # location_admin = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    # location_user_group = GroupSerializer(many=True, read_only=True)
+
+    # location_user_group = serializers.PrimaryKeyRelatedField(read_only=True)
 
     class Meta:
         model = Location
-        fields = ['location_name', 'location_type', 'location_parent', 'location_admin', 'location_user_group']
+        fields = ['id', 'location_name', 'location_type', 'location_parent', 'location_admin', 'location_user_group']
         # lookup_field = 'group__name'
 
 
 class DefectStatusSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = DefectStatus
-        fields = ['defect_status']
+        fields = ['id', 'defect_status']
 
 
 class DefectSerializer(serializers.HyperlinkedModelSerializer):
@@ -110,5 +111,6 @@ class DefectSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Defect
-        fields = ['defect_respondent', 'defect_status', 'defect_location', 'defect_name', 'defect_description', 'defect_respondent', ]
+        fields = ['id', 'defect_respondent', 'defect_status', 'defect_location', 'defect_name', 'defect_description',
+                  'defect_respondent', ]
 

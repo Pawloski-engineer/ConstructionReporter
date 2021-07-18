@@ -6,9 +6,10 @@ from django.contrib.auth.models import User, Group
 from django.shortcuts import render, redirect
 from django.contrib import messages
 
+from rest_framework.response import Response
 from rest_framework import viewsets
 from rest_framework import permissions
-from rest_framework import filters
+from rest_framework import filters, status
 from .models import DefectSerializer, DefectStatusSerializer, LocationTypeSerializer, LocationSerializer, UserSerializer, GroupSerializer
 
 from django.views.generic import TemplateView
@@ -18,6 +19,7 @@ from django.urls import reverse
 from django.core import serializers
 
 version = '1.0.1'
+
 
 def index(request):
     return render(request, 'ConstructionReporter/index.html')
@@ -203,17 +205,10 @@ class DefectViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.AllowAny]
 
 
-
-# class DefectStatusViewSet(viewsets.ModelViewSet):
-#     queryset = DefectStatus.objects.all().order_by('defect_status')
-#     serializer_class = DefectStatusSerializer
-#     permission_classes = [permissions.AllowAny]
-
 class DefectStatusViewSet(viewsets.ModelViewSet):
     queryset = DefectStatus.objects.all().values()
     serializer_class = DefectStatusSerializer
     permission_classes = [permissions.AllowAny]
-
 
 
 class LocationTypeViewSet(viewsets.ModelViewSet):
@@ -221,6 +216,14 @@ class LocationTypeViewSet(viewsets.ModelViewSet):
     serializer_class = LocationTypeSerializer
     permission_classes = [permissions.AllowAny]
 
+    def create(self, request, *args, **kwargs):
+        location_type_data = request.data
+        serializer = LocationTypeSerializer(data=location_type_data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class LocationViewSet(viewsets.ModelViewSet):
@@ -231,11 +234,19 @@ class LocationViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.AllowAny]
     pagination_class = None
 
+    def create(self, request, *args, **kwargs):
+        location_data = request.data
+        serializer = LocationSerializer(data=location_data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-
 
 
 class GroupViewSet(viewsets.ModelViewSet):
@@ -261,6 +272,7 @@ class ServiceWorkerView(TemplateView):
 
 def offline(request):
     return render(request, 'ConstructionReporter/offline.html')
+
 
 def refresh_localstorage(request):
     return render(request, 'ConstructionReporter/refresh_localstorage.html')
