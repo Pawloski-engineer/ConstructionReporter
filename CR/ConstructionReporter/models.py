@@ -105,7 +105,7 @@ class DefectStatusSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class DefectSerializer(serializers.HyperlinkedModelSerializer):
-    defect_status = serializers.PrimaryKeyRelatedField(queryset=DefectStatus.objects.all())
+    defect_status = serializers.PrimaryKeyRelatedField(queryset=DefectStatus.objects.all(), default=1)
     defect_location = serializers.PrimaryKeyRelatedField(queryset=Location.objects.all())
     defect_respondent = GroupSerializer(many=True, read_only=True)
 
