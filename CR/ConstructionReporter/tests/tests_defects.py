@@ -7,7 +7,6 @@ from .models import Defect
 from .models import DefectSerializer
 
 
-
 class DefectCreationTestCase(APITestCase):
     def test_defect_creation(self):
         data = {"defect_name": "test", "defect_description": "testing", "defect_status": 1,
