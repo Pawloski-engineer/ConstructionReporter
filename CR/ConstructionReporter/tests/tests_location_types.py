@@ -1,5 +1,3 @@
-from django.test import TestCase
-import json
 from rest_framework.test import APITestCase
 from rest_framework import status
 
