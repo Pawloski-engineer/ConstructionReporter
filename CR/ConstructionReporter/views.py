@@ -1,7 +1,7 @@
 from django.shortcuts import render
 # from .models import Defect, Respondent, MediaFile, Location, LocationType
-from .forms import LocationTypeForm, LocationForm, DefectStatusForm, DefectForm
-from .models import LocationType, Location, DefectStatus, Defect
+from .forms import LocationTypeForm, LocationForm, DefectForm
+from .models import LocationType, Location, Defect
 from django.contrib.auth.models import User, Group
 from django.shortcuts import render, redirect
 from django.contrib import messages
@@ -10,7 +10,7 @@ from rest_framework.response import Response
 from rest_framework import viewsets
 from rest_framework import permissions
 from rest_framework import filters, status
-from .models import DefectSerializer, DefectStatusSerializer, LocationTypeSerializer, LocationSerializer, UserSerializer, GroupSerializer
+from .models import DefectSerializer, LocationTypeSerializer, LocationSerializer, UserSerializer, GroupSerializer
 
 from django.views.generic import TemplateView
 from django.templatetags.static import static
@@ -207,21 +207,6 @@ class DefectViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         defect_data = request.data
         serializer = DefectSerializer(data=defect_data)
-
-        if serializer.is_valid():
-            serializer.save()
-            return Response(status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-class DefectStatusViewSet(viewsets.ModelViewSet):
-    queryset = DefectStatus.objects.all().values()
-    serializer_class = DefectStatusSerializer
-    permission_classes = [permissions.AllowAny]
-
-    def create(self, request, *args, **kwargs):
-        defect_status_data = request.data
-        serializer = DefectStatusSerializer(data=defect_status_data)
 
         if serializer.is_valid():
             serializer.save()

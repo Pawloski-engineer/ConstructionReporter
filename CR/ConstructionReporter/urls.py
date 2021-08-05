@@ -5,7 +5,6 @@ from rest_framework import routers
 
 router = routers.DefaultRouter()
 router.register(r'defects-detail', views.DefectViewSet)
-router.register(r'defectstatus-detail', views.DefectStatusViewSet)
 router.register(r'locationtype-detail', views.LocationTypeViewSet)
 router.register(r'location-detail', views.LocationViewSet)
 router.register(r'user-detail', views.UserViewSet)
