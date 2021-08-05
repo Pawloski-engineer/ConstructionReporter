@@ -33,17 +33,21 @@ class MediaFile(models.Model):
         return self.media_file
 
 
-class DefectStatus(models.Model):
-    defect_status = models.CharField(max_length=200)
-
-    def __str__(self):
-        return self.defect_status
+# class DefectStatus(models.Model):   # TODO remove this model and put a field to defects
+#     defect_status = models.CharField(max_length=200)
+#
+#     def __str__(self):
+#         return self.defect_status
 
 
 class Defect(models.Model):
+    class DefectStatus(models.TextChoices):
+        UNREPAIRED = 'Unrepaired'
+        REPAIRED = 'Repaired'
+
     defect_name = models.CharField(max_length=200)
     defect_description = models.CharField(max_length=200, blank=True)
-    defect_status = models.ForeignKey(DefectStatus, on_delete=models.CASCADE)    #TODO make it so that user decides which one to choose
+    defect_status = models.CharField(max_length=10, choices=DefectStatus.choices, default=DefectStatus.UNREPAIRED)
     defect_location = models.ForeignKey(Location, on_delete=models.CASCADE)
     defect_respondent = models.ManyToManyField(Group)
     # defect_respondent = models.ForeignKey(Group, on_delete=models.CASCADE)
@@ -98,14 +102,7 @@ class LocationSerializer(serializers.HyperlinkedModelSerializer):
         # lookup_field = 'group__name'
 
 
-class DefectStatusSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = DefectStatus
-        fields = ['id', 'defect_status']
-
-
 class DefectSerializer(serializers.HyperlinkedModelSerializer):
-    defect_status = serializers.PrimaryKeyRelatedField(queryset=DefectStatus.objects.all(), default=1)
     defect_location = serializers.PrimaryKeyRelatedField(queryset=Location.objects.all())
     defect_respondent = GroupSerializer(many=True, read_only=True)
 
