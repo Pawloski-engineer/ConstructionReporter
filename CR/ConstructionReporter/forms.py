@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Location, LocationType, DefectStatus, Defect
+from .models import Location, LocationType, Defect
 
 from django.contrib.auth.models import User
 
@@ -17,13 +17,9 @@ class LocationTypeForm(forms.ModelForm):
         fields = ('location_type_name',)
 
 
-class DefectStatusForm(forms.ModelForm):
-    class Meta:
-        model = DefectStatus
-        fields = ('defect_status',)
-
-
 class DefectForm(forms.ModelForm):
     class Meta:
         model = Defect
-        fields = ('defect_name', 'defect_description', 'defect_status', 'defect_location', 'defect_respondent', 'reporter', 'media_files')
+        fields = ('defect_name', 'defect_description',
+                  # 'defect_status',
+                  'defect_location', 'defect_respondent', 'reporter', 'media_files')

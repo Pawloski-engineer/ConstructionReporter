@@ -1,7 +1,7 @@
 from django.shortcuts import render
 # from .models import Defect, Respondent, MediaFile, Location, LocationType
-from .forms import LocationTypeForm, LocationForm, DefectStatusForm, DefectForm
-from .models import LocationType, Location, DefectStatus, Defect
+from .forms import LocationTypeForm, LocationForm, DefectForm
+from .models import LocationType, Location, Defect
 from django.contrib.auth.models import User, Group
 from django.shortcuts import render, redirect
 from django.contrib import messages
@@ -10,7 +10,7 @@ from rest_framework.response import Response
 from rest_framework import viewsets
 from rest_framework import permissions
 from rest_framework import filters, status
-from .models import DefectSerializer, DefectStatusSerializer, LocationTypeSerializer, LocationSerializer, UserSerializer, GroupSerializer
+from .models import DefectSerializer, LocationTypeSerializer, LocationSerializer, UserSerializer, GroupSerializer
 
 from django.views.generic import TemplateView
 from django.templatetags.static import static
@@ -51,16 +51,16 @@ def create_a_location_type_new(request):
             return render(request, 'ConstructionReporter/index.html')
 
 
-def create_a_defect_status(request):
-    if not request.user.is_authenticated:
-        return render(request, 'index.html')
-    else:
-        defect_statuses = load_defect_statuses()
-        context = {
-            'defect_statuses': defect_statuses,
-
-        }
-        return render(request, 'ConstructionReporter/create_a_defect_status.html', context)
+# def create_a_defect_status(request):
+#     if not request.user.is_authenticated:
+#         return render(request, 'index.html')
+#     else:
+#         defect_statuses = load_defect_statuses()
+#         context = {
+#             'defect_statuses': defect_statuses,
+#
+#         }
+#         return render(request, 'ConstructionReporter/create_a_defect_status.html', context)
 
 
 def create_a_defect_status_new(request):
@@ -141,12 +141,12 @@ def create_a_defect(request):
         locations = load_locations()
         defects = load_defects()
         groups = load_groups()
-        defect_statuses = load_defect_statuses()
+        # defect_statuses = load_defect_statuses()
         context = {
             'locations': locations,
             'defects': defects,
             'groups': groups,
-            'defect_statuses': defect_statuses,
+            # 'defect_statuses': defect_statuses,
         }
         return render(request, 'ConstructionReporter/create_a_defect.html', context)
 
@@ -204,11 +204,14 @@ class DefectViewSet(viewsets.ModelViewSet):
     serializer_class = DefectSerializer
     permission_classes = [permissions.AllowAny]
 
+    def create(self, request, *args, **kwargs):
+        defect_data = request.data
+        serializer = DefectSerializer(data=defect_data)
 
-class DefectStatusViewSet(viewsets.ModelViewSet):
-    queryset = DefectStatus.objects.all().values()
-    serializer_class = DefectStatusSerializer
-    permission_classes = [permissions.AllowAny]
+        if serializer.is_valid():
+            serializer.save()
+            return Response(status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class LocationTypeViewSet(viewsets.ModelViewSet):
