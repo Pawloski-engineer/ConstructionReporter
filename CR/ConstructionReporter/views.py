@@ -51,16 +51,16 @@ def create_a_location_type_new(request):
             return render(request, 'ConstructionReporter/index.html')
 
 
-def create_a_defect_status(request):
-    if not request.user.is_authenticated:
-        return render(request, 'index.html')
-    else:
-        defect_statuses = load_defect_statuses()
-        context = {
-            'defect_statuses': defect_statuses,
-
-        }
-        return render(request, 'ConstructionReporter/create_a_defect_status.html', context)
+# def create_a_defect_status(request):
+#     if not request.user.is_authenticated:
+#         return render(request, 'index.html')
+#     else:
+#         defect_statuses = load_defect_statuses()
+#         context = {
+#             'defect_statuses': defect_statuses,
+#
+#         }
+#         return render(request, 'ConstructionReporter/create_a_defect_status.html', context)
 
 
 def create_a_defect_status_new(request):
@@ -141,12 +141,12 @@ def create_a_defect(request):
         locations = load_locations()
         defects = load_defects()
         groups = load_groups()
-        defect_statuses = load_defect_statuses()
+        # defect_statuses = load_defect_statuses()
         context = {
             'locations': locations,
             'defects': defects,
             'groups': groups,
-            'defect_statuses': defect_statuses,
+            # 'defect_statuses': defect_statuses,
         }
         return render(request, 'ConstructionReporter/create_a_defect.html', context)
 

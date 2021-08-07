@@ -42,8 +42,8 @@ class MediaFile(models.Model):
 
 class Defect(models.Model):
     class DefectStatus(models.TextChoices):
-        UNREPAIRED = 'Unrepaired'
-        REPAIRED = 'Repaired'
+        UNREPAIRED = 0
+        REPAIRED = 1
 
     defect_name = models.CharField(max_length=200)
     defect_description = models.CharField(max_length=200, blank=True)
